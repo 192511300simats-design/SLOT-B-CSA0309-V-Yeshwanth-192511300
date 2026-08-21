@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n, i;
+    int a = 0, b = 1, nextTerm;
+
+    printf("Enter number of terms: ");
+    if (scanf("%d", &n) != 1) {
+        return 1;
+    }
+
+    // The prompt says n <= 20. Let's ensure n is positive.
+    if (n <= 0) {
+        printf("Please enter a positive integer.\n");
+        return 0;
+    }
+    
+    // If n is greater than 20, we can cap it or handle as per instruction
+    if (n > 20) {
+        n = 20; 
+    }
+
+    printf("Fibonacci series: ");
+
+    for (i = 1; i <= n; i++) {
+        if (i == 1) {
+            printf("%d", a);
+        } else if (i == 2) {
+            printf(" %d", b);
+        } else {
+            nextTerm = a + b;
+            printf(" %d", nextTerm);
+            a = b;
+            b = nextTerm;
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
