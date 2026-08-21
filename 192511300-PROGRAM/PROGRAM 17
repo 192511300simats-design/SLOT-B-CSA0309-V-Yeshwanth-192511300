@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int arr[10];
+    int target, i;
+    int low = 0, high = 9, mid;
+    int comparisons = 0;
+    int found = 0;
+
+    printf("Enter 10 sorted integers:\n");
+    for (i = 0; i < 10; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter element to search: ");
+    scanf("%d", &target);
+
+    while (low <= high) {
+        comparisons++;  // comparison for each loop iteration
+
+        mid = low + (high - low) / 2;
+
+        if (arr[mid] == target) {
+            found = 1;
+            printf("Element %d found at position %d\n", target, mid + 1); // 1-based position
+            break;
+        } else if (arr[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    if (!found) {
+        printf("Element %d not found in the array\n", target);
+    }
+
+    printf("Comparisons made: %d\n", comparisons);
+
+    return 0;
+}
