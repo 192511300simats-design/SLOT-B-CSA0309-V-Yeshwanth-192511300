@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, target, found = 0, position = -1, comparisons = 0;
+
+    // 1. Accept array size dynamically
+    printf("Enter size: ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        return 1;
+    }
+
+    int *arr = (int *)malloc(n * sizeof(int));
+    if (arr == NULL) {
+        return 1;
+    }
+
+    // 2. Read array elements
+    printf("Array: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // 3. Read target element
+    printf("Enter target: ");
+    scanf("%d", &target);
+
+    // 4. Perform Linear Search with Comparison Trace
+    printf("Comparison Trace:\n");
+    for (int i = 0; i < n; i++) {
+        comparisons++;
+        if (arr[i] == target) {
+            printf(" %d = %d\n", arr[i], target);
+            found = 1;
+            position = i + 1; // Using 1-based position for display
+            break;
+        } else {
+            printf(" %d ≠ %d\n", arr[i], target);
+        }
+    }
+
+    // 5. Display Results
+    if (found) {
+        printf("Target Found at Position %d\n", position);
+    } else {
+        printf("Target not found in the array.\n");
+    }
+    printf(" Comparisons Made = %d\n", comparisons);
+
+    free(arr);
+    return 0;
+}
