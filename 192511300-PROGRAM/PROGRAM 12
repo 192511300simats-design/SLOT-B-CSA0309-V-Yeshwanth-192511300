@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+void sortArray(int arr[], int n) {
+    int i, j, temp;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int isSorted(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n = 15;
+    int arr[15];
+    int target, i;
+    int low, high, mid;
+    int comparisons = 0;
+    int foundIndex = -1;
+
+    // 1. Accept input
+    printf("Enter 15 numbers: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // 2. Sort the array
+    sortArray(arr, n);
+
+    printf("Sorted array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    // 3. Accept target
+    printf("Enter target: ");
+    scanf("%d", &target);
+
+    // 4. Perform Binary Search with iteration display
+    printf("Binary Search Iterations:\n");
+    low = 0;
+    high = n - 1;
+
+    while (low <= high) {
+        comparisons++;
+        mid = low + (high - low) / 2;
+        printf("low=%d, high=%d, mid=%d, arr[%d]=%d\n", low, high, mid, mid, arr[mid]);
+
+        if (arr[mid] == target) {
+            foundIndex = mid;
+            break;
+        } else if (arr[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    // 5. Display Results
+    if (foundIndex != -1) {
+        printf("Found at index %d (1-based: %d)\n", foundIndex, foundIndex + 1);
+    } else {
+        printf("Target not found in array.\n");
+    }
+
+    printf("Comparisons: %d\n", comparisons);
+    printf("Array remains sorted: %s\n", isSorted(arr, n) ? "Yes" : "No");
+
+    return 0;
+}
