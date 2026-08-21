@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    
+    // Read the number of elements
+    if (scanf("%d", &n) != 1) return 0;
+    
+    // Validate that n <= 50
+    if (n > 50 || n < 0) return 0;
+    
+    int temps[50];
+    
+    // Read the daily temperatures and display them instantly
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &temps[i]) != 1) break;
+        printf("%d ", temps[i]);
+    }
+    printf("\n");
+    
+    int last_index = -1;
+    
+    // Linear search to find the *last* day whose temperature is < 20
+    for (int i = 0; i < n; i++) {
+        if (temps[i] < 20) {
+            last_index = i;
+        }
+    }
+    
+    // Print the result based on the search outcome
+    if (last_index != -1) {
+        printf("Last <20: index %d (%d)\n", last_index, temps[last_index]);
+    } else {
+        printf("Not found\n");
+    }
+
+    return 0;
+}
