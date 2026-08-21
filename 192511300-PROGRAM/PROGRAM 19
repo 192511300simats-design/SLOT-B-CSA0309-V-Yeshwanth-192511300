@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    
+    // Read the number of elements
+    if (scanf("%d", &n) != 1 || n <= 0 || n > 50) {
+        return 0;
+    }
+    
+    int prices[50];
+    
+    // Read the product prices into an array
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &prices[i]);
+    }
+    
+    // Sort the array in ascending order using Bubble Sort
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (prices[j] > prices[j + 1]) {
+                int temp = prices[j];
+                prices[j] = prices[j + 1];
+                prices[j + 1] = temp;
+            }
+        }
+    }
+    
+    // Print the sorted prices
+    for (int i = 0; i < n; i++) {
+        printf("%d%s", prices[i], (i == n - 1) ? "" : " ");
+    }
+    printf("\n");
+
+    // Linear Search for the first price >= 500
+    int firstIdx = -1;
+    for (int i = 0; i < n; i++) {
+        if (prices[i] >= 500) {
+            firstIdx = i;
+            break;
+        }
+    }
+
+    // Linear Search for the last price <= 200
+    int lastIdx = -1;
+    for (int i = n - 1; i >= 0; i--) {
+        if (prices[i] <= 200) {
+            lastIdx = i;
+            break;
+        }
+    }
+
+    // Display results for First >= 500
+    if (firstIdx != -1) {
+        printf("First >=500: index %d (%d)\n", firstIdx, prices[firstIdx]);
+    } else {
+        printf("First >=500: Not found\n");
+    }
+
+    // Display results for Last <= 200
+    if (lastIdx != -1) {
+        printf("Last <=200: index %d (%d)\n", lastIdx, prices[lastIdx]);
+    } else {
+        printf("Last <=200: Not found\n");
+    }
+
+    return 0;
+}
