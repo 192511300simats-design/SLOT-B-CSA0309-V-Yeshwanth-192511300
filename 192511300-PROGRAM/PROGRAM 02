@@ -15,3 +15,6 @@ int main()
     printf("Factorial of %d is %lld", n, factorial(n));
     return 0;
 }
+
+output:
+Enter a number: Factorial of 6 is 720
