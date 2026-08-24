@@ -1,68 +1,65 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int value) {
+    if (top == MAX - 1)
+        printf("Stack Overflow\n");
+    else {
+        stack[++top] = value;
+        printf("%d pushed into stack\n", value);
+    }
+}
+
+void pop() {
+    if (top == -1)
+        printf("Stack Underflow\n");
+    else
+        printf("%d popped from stack\n", stack[top--]);
+}
+
+void peek() {
+    if (top == -1)
+        printf("Stack is empty\n");
+    else
+        printf("Top element = %d\n", stack[top]);
+}
+
+void display() {
+    int i;
+
+    printf("Stack: ");
+    for (i = top; i >= 0; i--)
+        printf("%d ", stack[i]);
+
+    printf("\n");
+}
 
 int main() {
-    int arr[10];
-    int choice, target;
-    int i, pos = -1, comparisons = 0;
+    push(10);
+    push(20);
+    push(30);
 
-    clock_t start, end;
-    double time_taken;
+    display();
 
-    printf("Enter 1 for manual input, 2 for random: ");
-    scanf("%d", &choice);
+    peek();
+    pop();
 
-    if (choice == 1) {
-        printf("Enter 10 integers:\n");
-        for (i = 0; i < 10; i++)
-            scanf("%d", &arr[i]);
-    }
-    else if (choice == 2) {
-        srand(time(NULL));
-        printf("Generated Array: ");
-        for (i = 0; i < 10; i++) {
-            arr[i] = rand() % 100;
-            printf("%d ", arr[i]);
-        }
-        printf("\n");
-    }
-    else {
-        printf("Invalid choice!\n");
-        return 1;
-    }
-
-    printf("Enter target value: ");
-    scanf("%d", &target);
-
-    // Start timing
-    start = clock();
-
-    // Linear Search Logic
-    for (i = 0; i < 10; i++) {
-        comparisons++;
-        if (arr[i] == target) {
-            pos = i + 1; // 1-based indexing
-            break;
-        }
-    }
-
-    // End timing
-    end = clock();
-    time_taken = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
-
-    // Display Results
-    if (pos != -1) {
-        printf("Target %d found at position %d\n", target, pos);
-        printf("Comparisons made: %d\n", comparisons);
-        printf("Status: Found\n",);
-    } else {
-        printf("Target %d not found\n", target);
-        printf("Comparisons made: %d\n", comparisons);
-        printf("Status: Not Found\n");
-    }
-    
-    printf("Time taken: %.3f ms\n", time_taken);
+    display();
+    peek();
 
     return 0;
 }
+
+OUTPUT:
+10 pushed into stack
+20 pushed into stack
+30 pushed into stack
+Stack: 30 20 10
+Top element = 30
+30 popped from stack
+Stack: 20 10
+Top element = 20
