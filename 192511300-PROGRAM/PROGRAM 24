@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+#define MAX 10
+#define INF 99999
+
+int main() {
+    int graph[MAX][MAX];
+    int selected[MAX] = {0};
+    int n, i, j;
+    int edges = 0;
+    int min, x = 0, y = 0;
+    int total = 0;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter weighted adjacency matrix:\n");
+    scanf("%d", &graph[0][0]);
+
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++) {
+            if (i == 0 && j == 0)
+                continue;
+            scanf("%d", &graph[i][j]);
+        }
+
+    selected[0] = 1;
+
+    printf("Edges in Minimum Spanning Tree:\n");
+
+    while (edges < n - 1) {
+        min = INF;
+
+        for (i = 0; i < n; i++) {
+            if (selected[i]) {
+                for (j = 0; j < n; j++) {
+                    if (!selected[j] && graph[i][j] != 0 &&
+                        graph[i][j] < min) {
+
+                        min = graph[i][j];
+                        x = i;
+                        y = j;
+                    }
+                }
+            }
+        }
+
+        printf("%d - %d : %d\n", x, y, graph[x][y]);
+
+        total += graph[x][y];
+        selected[y] = 1;
+        edges++;
+    }
+
+    printf("Minimum Cost = %d\n", total);
+
+    return 0;
+}
+
+OUTPUT:
+Enter number of vertices: 5
+Enter weighted adjacency matrix:
+0 2 0 6 0
+2 0 3 8 5
+0 3 0 0 7
+6 8 0 0 9
+0 5 7 9 0
+
+Edges in Minimum Spanning Tree:
+0 - 1 : 2
+1 - 2 : 3
+1 - 4 : 5
+0 - 3 : 6
+
+Minimum Cost = 16
