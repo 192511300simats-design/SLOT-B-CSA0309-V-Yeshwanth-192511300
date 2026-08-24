@@ -1,89 +1,62 @@
 #include <stdio.h>
 
-// Function to sort the array in ascending order using Bubble Sort
-void bubbleSort(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
+#define MAX 5
+
+int queue[MAX];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == MAX - 1)
+        printf("Queue Overflow\n");
+    else {
+        if (front == -1)
+            front = 0;
+
+        queue[++rear] = value;
+        printf("%d inserted into queue\n", value);
     }
 }
 
-// Iterative binary search for the FIRST element >= 30
-int findFirstGE30(int arr[], int n) {
-    int low = 0, high = n - 1;
-    int result = -1;
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (arr[mid] >= 30) {
-            result = mid;
-            high = mid - 1; // Look left to find the absolute first occurrence
-        } else {
-            low = mid + 1;
-        }
-    }
-    return result;
+void dequeue() {
+    if (front == -1 || front > rear)
+        printf("Queue Underflow\n");
+    else
+        printf("%d deleted from queue\n", queue[front++]);
 }
 
-// Iterative binary search for the LAST element <= 25
-int findLastLE25(int arr[], int n) {
-    int low = 0, high = n - 1;
-    int result = -1;
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (arr[mid] <= 25) {
-            result = mid;
-            low = mid + 1; // Look right to find the absolute last occurrence
-        } else {
-            high = mid - 1;
-        }
+void display() {
+    int i;
+
+    if (front == -1 || front > rear) {
+        printf("Queue is empty\n");
+        return;
     }
-    return result;
+
+    printf("Queue: ");
+
+    for (i = front; i <= rear; i++)
+        printf("%d ", queue[i]);
+
+    printf("\n");
 }
 
 int main() {
-    int n;
-    if (scanf("%d", &n) != 1) return 0;
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
 
-    // Validate n <= 50
-    if (n <= 0 || n > 50) {
-        printf("Invalid array size.\n");
-        return 0;
-    }
+    display();
 
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-
-    // 1. Sort the array
-    bubbleSort(arr, n);
-
-    // 2. Display sorted array
-    for (int i = 0; i < n; i++) {
-        printf("%d%s", arr[i], (i == n - 1) ? "" : " ");
-    }
-    printf("\n");
-
-    // 3. Find First >= 30
-    int idx1 = findFirstGE30(arr, n);
-    if (idx1 != -1) {
-        printf("First >=30: index %d (%d)\n", idx1, arr[idx1]);
-    } else {
-        printf("First >=30: Not found\n");
-    }
-
-    // 4. Find Last <= 25
-    int idx2 = findLastLE25(arr, n);
-    if (idx2 != -1) {
-        printf("Last <=25: index %d (%d)\n", idx2, arr[idx2]);
-    } else {
-        printf("Last <=25: Not found\n");
-    }
+    dequeue();
+    display();
 
     return 0;
 }
+
+OUTPUT:
+10 inserted into queue
+20 inserted into queue
+30 inserted into queue
+Queue: 10 20 30
+10 deleted from queue
+Queue: 20 30
