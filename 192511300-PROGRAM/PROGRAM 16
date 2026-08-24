@@ -1,52 +1,38 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int main() {
-    int n, target, found = 0, position = -1, comparisons = 0;
+    int a[100], n, i, j, key;
 
-    // 1. Accept array size dynamically
-    printf("Enter size: ");
-    if (scanf("%d", &n) != 1 || n <= 0) {
-        return 1;
-    }
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
 
-    int *arr = (int *)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        return 1;
-    }
+    printf("Enter elements:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
 
-    // 2. Read array elements
-    printf("Array: ");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+    for (i = 1; i < n; i++) {
+        key = a[i];
+        j = i - 1;
 
-    // 3. Read target element
-    printf("Enter target: ");
-    scanf("%d", &target);
-
-    // 4. Perform Linear Search with Comparison Trace
-    printf("Comparison Trace:\n");
-    for (int i = 0; i < n; i++) {
-        comparisons++;
-        if (arr[i] == target) {
-            printf(" %d = %d\n", arr[i], target);
-            found = 1;
-            position = i + 1; // Using 1-based position for display
-            break;
-        } else {
-            printf(" %d ≠ %d\n", arr[i], target);
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
         }
+
+        a[j + 1] = key;
     }
 
-    // 5. Display Results
-    if (found) {
-        printf("Target Found at Position %d\n", position);
-    } else {
-        printf("Target not found in the array.\n");
-    }
-    printf(" Comparisons Made = %d\n", comparisons);
+    printf("Sorted Array: ");
 
-    free(arr);
+    for (i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
     return 0;
 }
+
+OUTPUT:
+Enter number of elements: 6
+Enter elements:
+64 25 12 22 11 90
+
+Sorted Array: 11 12 22 25 64 90
