@@ -1,111 +1,20 @@
 #include <stdio.h>
 
-void reverse(int arr[], int start, int end) {
-    while (start < end) {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        start++;
-        end--;
-    }
-}
-
-void printArray(int arr[], int n) {
-    printf("[");
-    for (int i = 0; i < n; i++) {
-        printf("%d", arr[i]);
-        if (i != n - 1)
-            printf(" ");
-    }
-    printf("]\n");
-}
-
-int sumArray(int arr[], int n) {
-    int sum = 0;
-    for (int i = 0; i < n; i++)
-        sum += arr[i];
-    return sum;
-}
-
 int main() {
-    int arr[10], n = 10;
-    char dir;
-    int k;
-    char again;
+    int n, i;
+    unsigned long long fact = 1;
 
-    do {
-        printf("Enter 10 numbers: ");
-        for (int i = 0; i < n; i++) {
-            scanf("%d", &arr[i]);
-        }
+    printf("Enter a number: ");
+    scanf("%d", &n);
 
-        int originalSum = sumArray(arr, n);
+    for (i = 1; i <= n; i++)
+        fact *= i;
 
-        printf("Rotate Left (L) / Right (R): ");
-        scanf(" %c", &dir);
-
-        printf("By positions: ");
-        scanf("%d", &k);
-
-        /* validate K: 0 ≤ K < N */
-        if (k < 0 || k >= n) {
-            printf("Invalid K. Must be 0 <= K < %d\n", n);
-        } else {
-            /* normalize k in case user gives big positive value (optional) */
-            k = k % n;
-
-            printf("Original: ");
-            printArray(arr, n);
-
-            if (dir == 'L' || dir == 'l') {
-                /* Left rotation using reversal algorithm */
-                reverse(arr, 0, k - 1);
-                printf("Step1: Reverse 0-%d: ", k - 1);
-                printArray(arr, n);
-
-                reverse(arr, k, n - 1);
-                printf("Step2: Reverse %d-%d: ", k, n - 1);
-                printArray(arr, n);
-
-                reverse(arr, 0, n - 1);
-                printf("Step3: Reverse all: ");
-                printArray(arr, n);
-            } else if (dir == 'R' || dir == 'r') {
-                /* Right rotation by k = reverse algorithm */
-                reverse(arr, 0, n - 1);
-                printf("Step1: Reverse 0-%d: ", n - 1);
-                printArray(arr, n);
-
-                reverse(arr, 0, k - 1);
-                printf("Step2: Reverse 0-%d: ", k - 1);
-                printArray(arr, n);
-
-                reverse(arr, k, n - 1);
-                printf("Step3: Reverse %d-%d: ", k, n - 1);
-                printArray(arr, n);
-            } else {
-                printf("Invalid rotation direction.\n");
-            }
-
-            int rotatedSum = sumArray(arr, n);
-            printf("Sum difference: %d\n", rotatedSum - originalSum);
-        }
-
-        printf("\nDo another rotation? (Y/N): ");
-        scanf(" %c", &again);
-
-    } while (again == 'Y' || again == 'y');
+    printf("Factorial of %d = %llu\n", n, fact);
 
     return 0;
 }
 
-output:
-Enter 10 numbers: 
-Rotate Left (L) / Right (R): By positions: 
-Original: [1 2 3 4 5 6 7 8 9 10]
-Step1: Reverse 0-2: [3 2 1 4 5 6 7 8 9 10]
-Step2: Reverse 3-9: [3 2 1 10 9 8 7 6 5 4]
-Step3: Reverse all: [4 5 6 7 8 9 10 1 2 3]
-Sum difference: 0
-
-Do another rotation? (Y/N):
+OUTPUT:
+Enter a number: 5
+Factorial of 5 = 120
